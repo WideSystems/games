@@ -15,6 +15,7 @@ public class Prato : MonoBehaviour {
 
 	void Update() {
 		// Track a single touch as a direction control.
+
 		if (Input.touchCount > 0) {
 			var touch = Input.GetTouch(0);
 			
@@ -36,16 +37,23 @@ public class Prato : MonoBehaviour {
 				directionChosen = true;
 				break;
 			}
+		
 
-			if(direction.x > 0f && transform.position.x == 0f){
-				teste = "MAIOR " + transform.position.x;
-				transform.position = new Vector2(1.8f, transform.position.y);
+			if(direction.x > 0f){
+				if(transform.position.x == 0f){
+					transform.position = new Vector2(1.8f, transform.position.y);
+				}else {
+					transform.position = new Vector2(0f, transform.position.y);					
+				}
+
+			} else {
+				if(transform.position.x == 0f){
+					transform.position = new Vector2(-1.8f, transform.position.y);
+				}else {
+					transform.position = new Vector2(0f, transform.position.y);
+				}
 			}
-			
-			if(direction.x < 0f && transform.position.x == 0f){
-				teste = "MENOR " + transform.position.x;
-				transform.position = new Vector2(-1.8f, transform.position.y);
-			}
+
 		}
 
 	}
