@@ -3,62 +3,49 @@ using System.Collections;
 
 public class Item : MonoBehaviour {
 
-	public GameObject esquerdaItem;
-	public GameObject direitaItem;
-	public GameObject tinta;
-
-	public float forca;
-	public float torque;
-	private bool isDead;
-	private Vector3 screen;
-
-	public float alpha;
-	public float red;
-	public float green;
-	public float blue;
-
-	private float minY;
-	private float maxY;
-
-	private float rotDirecao = 50;
-
+	private float speed;
+	private static bool isDown;
+	
 	// Use this for initialization
 	void Start () {
-		minY = GerenciarCamera.MinY ();
-		maxY = GerenciarCamera.MaxY ();
-
+		if(speed == 0)
+			speed *= -1;
+		speed = 5f;
+		isDown = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Remover ();
+		Vector3 pos = transform.position;
+		if(Input.GetMouseButtonDown (0))
+		{
+			speed = 0;
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+		}
+		pos.x += speed * Time.deltaTime;
+		transform.position = pos;
 	}
 
-	public void Remover(){
-		screen = Camera.main.WorldToScreenPoint(transform.position);
-		if(isDead && screen.y < minY){
-			Destroy(gameObject);
-		}else {
-			isDead = true;
+	void OnCollisionEnter2D(Collision2D other){
+		if(other.gameObject.tag == "Prato" || other.gameObject.tag == "Pedaco01"){
+			isDown = true;
+
 		}
 	}
 
-	public void InstanciarDestruir(){
-		GameObject tempItem = null;
-		GameObject tempTinta = null;
+	void OnTriggerEnter2D(Collider2D other){
+		if(other.tag == "SpawnnerRight")
+			speed *= -1;
+		if(other.tag == "SpawnnerLeft")
+			speed *= -1;
 
-		tempItem = Instantiate (esquerdaItem, transform.position, transform.rotation) as GameObject;
-		tempItem.GetComponent<Rigidbody2D> ().AddForce (-transform.right * forca);
-		Debug.Log (transform.right);
-		//tempItem.AddComponent<Rigidbody2D> ().AddTorque (torque);
+	}
 
-		tempItem = Instantiate (esquerdaItem, transform.position, transform.rotation) as GameObject;
-		tempItem.GetComponent<Rigidbody2D> ().AddForce (transform.right * forca);
-		//tempItem.AddComponent<Rigidbody2D> ().AddTorque (torque);
+	public static bool getIsDown(){
+		return isDown;
+	}
 
-		tempTinta = Instantiate (tinta, new Vector2(transform.position.x, transform.position.y), transform.rotation) as GameObject;
-		//tempTinta.GetComponent<Tinta> ().SetColor (red, green, blue, alpha);
-
-		Destroy (gameObject);
+	public static void setIsDown (bool option){
+		isDown = option;
 	}
 }

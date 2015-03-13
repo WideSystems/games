@@ -7,10 +7,13 @@ public class Instanciar : MonoBehaviour {
 	public float maxSpawnTime;
 	public float spawnItem;
 
+
+
 	public GameObject[] Itens;
 	private GameObject item;
 	private int i;
 
+	public float rightForce = 200f;
 	public float downForce = -200;
 	//public float leftForce = 200f;
 	public static float minX, maxX; //posicao do instanciador
@@ -44,15 +47,20 @@ public class Instanciar : MonoBehaviour {
 			//item = Instantiate(Itens[i], new Vector2 (Random.Range(minX, maxX), transform.position.y), 
 			                  // Quaternion.Euler(0,0,Random.Range(-60,60))) as GameObject;
 
-			item = Instantiate(Itens[i], new Vector2 (transform.position.x, transform.position.y), 
+			//item = Instantiate(Itens[i], new Vector2 (Random.Range(minX, maxX), transform.position.y), 
+			  //                 Quaternion.identity) as GameObject;
+
+			item = Instantiate(Itens[i], new Vector2 (transform.position.y, transform.position.y), 
 			                   Quaternion.identity) as GameObject;
 
 			if(item.transform.position.x > 0){
 				//item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (-leftForce, downForce));
-				item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0f, downForce));
+				//item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0f, downForce));
+				item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (rightForce, 0f));
 			} else {
 				//item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (leftForce, downForce));
-				item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0f, downForce));
+				//item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0f, downForce));
+				item.GetComponent<Rigidbody2D>().AddForce(new Vector2 (rightForce, 0f));
 			}
 
 

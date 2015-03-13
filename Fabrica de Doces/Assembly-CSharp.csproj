@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GerenciarCamera.cs" />
      <Compile Include="Assets\Scripts\Instanciar.cs" />
+     <Compile Include="Assets\Scripts\InstanciarOne.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\Prato.cs" />
  <Reference Include="UnityEngine.UI">

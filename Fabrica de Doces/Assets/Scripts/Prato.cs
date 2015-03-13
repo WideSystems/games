@@ -2,20 +2,26 @@
 using System.Collections;
 
 public class Prato : MonoBehaviour {
+	
+	//public Vector2 startPos;
+	//public Vector2 direction;
+	//public bool directionChosen;
+	//public string teste = "";
+	//private Vector3 wantedPos;
+	//private HingeJoint2D hinge2d;
 
-	public Vector2 startPos;
-	public Vector2 direction;
-	public bool directionChosen;
-	public string teste = "";
-
+	public float speed = 2.5f; //for mouse
+	private Vector3 target; //for mouse
+	
 	// Use this for initialization
 	void Start () {
-
+		//hinge2d = GetComponent <HingeJoint2D>();
+		target = transform.position;// for mouse
 	}
-
+	
 	void Update() {
 		// Track a single touch as a direction control.
-
+		/*
 		if (Input.touchCount > 0) {
 			var touch = Input.GetTouch(0);
 			
@@ -23,13 +29,14 @@ public class Prato : MonoBehaviour {
 			switch (touch.phase) {
 				// Record initial touch position.
 			case TouchPhase.Began:
-				startPos = touch.position;
-				directionChosen = false;
+				//startPos = touch.position;
+				//directionChosen = false;
 				break;
 				
 				// Determine direction by comparing the current touch position with the initial one.
 			case TouchPhase.Moved:
-				direction = touch.position - startPos;
+				//direction = touch.position - startPos;
+				direction = touch.position;
 				break;
 				
 				// Report that a direction has been chosen when the finger is lifted.
@@ -37,37 +44,25 @@ public class Prato : MonoBehaviour {
 				directionChosen = true;
 				break;
 			}
-		
 
-			if(direction.x > 0f){
-				if(transform.position.x == 0f){
-					transform.position = new Vector2(1.8f, transform.position.y);
-				}else {
-					transform.position = new Vector2(0f, transform.position.y);					
-				}
+			Vector3 pos = transform.position;
+			wantedPos = Camera.main.ScreenToWorldPoint (new Vector3(direction.x, 0, 10));
+			pos.x = wantedPos.x;
+			transform.position = pos;
+			*/
 
-			} else {
-				if(transform.position.x == 0f){
-					transform.position = new Vector2(-1.8f, transform.position.y);
-				}else {
-					transform.position = new Vector2(0f, transform.position.y);
-				}
-			}
 
+
+ 	}
+	/*
+	void OnCollisionEnter2D(Collision2D other){
+		if(other.gameObject.tag == "Pedaco01"){
+			HingeJoint2D myJoint = gameObject.AddComponent<HingeJoint2D>();
+			myJoint.connectedBody = other.rigidbody;
+			myJoint.connectedAnchor = new Vector2 (-0.05868936f, -0.6646059f);
 		}
-
 	}
+	 */
 
-	void OnGUI(){
-		GUI.contentColor = Color.black;
-		GUI.Label(new Rect (10,0,100,50),"Inicio " + startPos, "color");
-		GUI.Label(new Rect (10,30,100,50),"Movido " + direction, "color");
-		GUI.Label(new Rect (10,60,100,50),"Movido " + teste, "color");
 
-		float merda = GerenciarCamera.MaxX();
-
-		GUI.Label(new Rect (10,80,100,50),"MaxX " +  merda, "color");
-		GUI.Label(new Rect (10,100,100,50),"MinX " + GerenciarCamera.MinX(), "color");
-
-	}
 }
